@@ -1,0 +1,15 @@
+const SU="https://dqultcugvmauvimithek.supabase.co",SK="sb_publishable_nl2U8pWleL-MAMmZaZxCcg_1mBvPisf";
+const sb=supabase.createClient(SU,SK);
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const lg=k=>{try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}},ls=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const CATS=[["casas","Casas","M3 11l9-8 9 8v10H3z M9 21v-6h6v6"],["apartamentos","Apartamentos","M5 21V3h9v18 M14 9h5v12 M8 7h3 M8 11h3 M8 15h3"],["terrenos","Terrenos","M12 3a5 5 0 0 0-4 8 4 4 0 0 0 4 4 4 4 0 0 0 4-4 5 5 0 0 0-4-8z M12 15v6"],["locales","Locales comerciales","M4 9l1-5h14l1 5v2H4z M5 11v10h14V11 M10 21v-6h4v6"],["fincas","Fincas","M12 21V10 M12 10c0-4 3-6 7-6 0 4-3 6-7 6z M12 14c0-3-2-5-6-5 0 3 2 5 6 5z"],["habitaciones","Habitaciones y alquileres","M3 18V7 M3 14h18v4 M21 14v-2a3 3 0 0 0-3-3h-7v5"],["piscinas","Alquiler de piscinas","M3 16c2 0 2-2 4.5-2s2.5 2 4.5 2 2.5-2 4.5-2 2.5 2 4.5 2 M3 20c2 0 2-2 4.5-2s2.5 2 4.5 2 2.5-2 4.5-2 2.5 2 4.5 2 M8 12V5a2 2 0 0 1 4 0 M14 12V5"],["otros","Otros","M5 12h.01 M12 12h.01 M19 12h.01"]];
+const LOC={"La Habana":["Centro Habana","Habana Vieja","Plaza","Playa","Vedado","Diez de Octubre"],"Matanzas":["Varadero","Matanzas","Cárdenas"],"Pinar del Río":["Viñales","Pinar del Río"],"Villa Clara":["Santa Clara","Remedios"],"Cienfuegos":["Cienfuegos"],"Holguín":["Holguín","Gibara"],"Santiago de Cuba":["Santiago de Cuba","Palma Soriano"]};
+const ico=p=>`<svg viewBox="0 0 24 24"><path d="${p}"/></svg>`;
+const cat=c=>CATS.find(x=>x[0]==c)||CATS[7];
+const money=p=>Number(p.price).toLocaleString("es")+" "+p.currency+(p.operation=="alquiler"?" / mes":"");
+const bg=(p,i=0)=>p.photos&&p.photos[i]?`background-image:url(${p.photos[i]})`:"background:linear-gradient(135deg,#0b2a63,#4a90d9)";
+const waNum=s=>{const d=String(s).replace(/\D/g,"").replace(/^00/,"");return d.length==8?"53"+d:d};
+const opts=(a,sel,ph)=>`<option value="">${ph}</option>`+a.map(x=>{const v=Array.isArray(x)?x[0]:x,l=Array.isArray(x)?x[1]:x;return `<option value="${esc(v)}"${v==sel?" selected":""}>${esc(l)}</option>`}).join("");
+const head=`<header><a href="./" style="text-decoration:none"><img src="logo.webp" alt="InMo" style="height:44px;width:auto;display:block"></a></header>`;
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
